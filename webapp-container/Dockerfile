@@ -1,5 +1,5 @@
 # 他の image はこちら https://hub.docker.com/_/python
-FROM python:3.10-alpine
+FROM python:3.13-alpine
 
 # 開発環境では .pyc をスキップ。
 ENV PYTHONDONTWRITEBYTECODE 1
