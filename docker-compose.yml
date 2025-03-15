@@ -31,9 +31,13 @@ services:
     # NOTE: 他のプロジェクトの django との重複を避けるため、変更している。
     # NOTE: それぞれ Django と Nuxt.js のためのポート。
     ports:
+      # NOTE: よく間違えるからメモ -> host 側 : container 側
+      # Django の runserver 用 (8000 -> 8081)
       - 8001:8000
+      # nginx で Django を配信する用 (8080 -> 8081)
       - 8081:8080
-      - 3001:3000
+      # yarn dev で React を配信する用 (5173 -> 5001)
+      - 5001:5173
     # tty, stdin_open しておくと exec するときに -it がいらないみたい。
     tty: true
     stdin_open: true

@@ -3,8 +3,12 @@
         "activityBar.background": "#2B3168",
     },
     "python.autoComplete.extraPaths": [
-        "${workspaceFolder}/webapp/.venv/lib/python3.10/site-packages"
+        "${workspaceFolder}/webapp/.venv/lib/python3.13/site-packages"
     ],
+
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "never"
+    },
 
     // DOC (https://github.com/astral-sh/ruff-vscode) の、
     // "Taken together, you can configure Ruff to format, fix, and organize imports on-save via the following settings.json"

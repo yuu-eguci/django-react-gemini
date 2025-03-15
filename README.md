@@ -1,10 +1,7 @@
-django-nuxt-gemini ♊
+django-react-gemini ♊
 ===
 
-TODO: 開発環境で、 3001 -> 8001 するところまでは完成済み。
-      8081 のみで動かすところが未完成。具体的には django 側に本番用の settings が必要。
-
-✌🏽✌🏽 🐍 🐳 🇳 Python 3.10 + Django v4 + Yarn + Nuxt v2 + Nginx + Docker + GitHub Actions + Ruff + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
+🐍 ⚛️ 🐳 🇳 Python 3.10 + Django v4 + Yarn + Nuxt v2 + Nginx + Docker + GitHub Actions + Ruff + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
 
 - python + django + yarn + nuxt + nginx なんつー container を用意して、
 - 開発環境では runserver (8000 -> 8081) と yarn dev (3000 -> 3001) で開発して、
@@ -53,23 +50,21 @@ Nginx エリアのいいところ
 #       をサッサと打つだけで開始できた。イイぞ。
 
 # Create containers
-cp ./local.env ./.env; docker compose up -d; docker compose exec webapp-service sh
+cp ./local.env ./.env; docker compose up -d; docker compose exec webapp-service bash
 
 # Get into webapp-service
 # NOTE: It's a good practice to have separate terminals for Django and Nuxt.js for easier debugging and log tracking.
-docker compose exec webapp-service sh
+docker compose exec webapp-service bash
 # Check↓
 python -V
-# --> Python 3.10.12
+# --> Python 3.12.9
 pipenv --version
-# --> pipenv, version 2023.7.23
+# --> pipenv, version 2024.4.1
 yarn -v
-# --> 1.22.19
-create-nuxt-app -v
-# --> create-nuxt-app/5.0.0 linux-x64 node-v18.17.0
-(cd ./frontend-nuxt; yarn list nuxt)
-# --> └─ nuxt@2.17.1
-# NOTE: warning が出るけど、それは完全一致検索を欠く yarn list が悪い。
+# --> 1.22.22
+
+(cd ./frontend-react; yarn list react)
+# --> └─ react@19.0.0
 
 # Django のほう。
 # NOTE: PIPENV_VENV_IN_PROJECT は env で設定してある。
@@ -78,10 +73,10 @@ pipenv run python manage.py migrate
 pipenv run python manage.py runserver 0.0.0.0:8000
 # --> http://localhost:8001/ でアクセス。
 
-# Nuxt.js のほう。
-(cd ./frontend-nuxt; yarn install)
-(cd ./frontend-nuxt; yarn dev --hostname 0.0.0.0)
-# --> http://localhost:3001/ でアクセス。
+# React のほう。
+(cd ./frontend-react; yarn install)
+(cd ./frontend-react; yarn dev --host)
+# --> http://localhost:5001/ でアクセス。
 ```
 
 ```bash
@@ -89,58 +84,12 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 time pipenv run ruff check .
 time pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
 
-(cd ./frontend-nuxt; time yarn test .)
-(cd ./frontend-nuxt; time yarn lint)
+# Currently unavailable.
+# (cd ./frontend-react; time yarn test .)
+# (cd ./frontend-react; time yarn lint)
 ```
-
-## 【Deprecated】 Gemini の更新を派生リポジトリへ取り込む手順
-
-このプロジェクトは取りやめた。たぶんアホな試みだった。
 
 ```bash
-# 派生リポジトリ側で行う↓
-
-# django-nuxt-gemini を upstream-gemini branch として登録する。
-git remote add upstream-gemini git@github.com:yuu-eguci/django-nuxt-gemini.git
-
-# このリポジトリの origin はもちろん自分、 upstream-gemini は Gemini という設定になっていることを確認。
-git remote -v
-# origin  https://github.com/user/派生リポジトリ.git (fetch)
-# origin  https://github.com/user/派生リポジトリ.git (push)
-# upstream-gemini git@github.com:yuu-eguci/django-nuxt-gemini.git (fetch)
-# upstream-gemini git@github.com:yuu-eguci/django-nuxt-gemini.git (push)
-# 間違えちゃったら削除↓
-git remote rm upstream-gemini
-
-# Gemini の現状を取得。
-git fetch upstream-gemini
-
-# Gemini の main ブランチへ切り替える。
-# この状態だと commit 履歴とまったく合ってないので 'detached HEAD' state になる。
-git checkout upstream-gemini/main
-
-# 好きなところまで reset で戻る。 (前回のバージョンを指定するのがよさげ)
-git reset --mixed HEAD^
-
-# Changes を、そのまま main へコミットしてもいいし、 update-from-upstream ブランチを作ってマージしてもいいし。
-# ➕ Update from django-nuxt-gemini upstream
-```
-
-## Nuxt.js を静的サイトとして nginx で配信する
-
-ここまで出来たよ!
-
-![](docs/(2023-08-04)8081-8080-8000-system.png)
-
-- `runserver` のとき: Container の外側 (8001) -> Django (8000) という流れ。
-- `nginx` のとき: Container の外側 (8081) -> Nginx (8080) -> Gunicorn (8000) という流れになるよ。
-
-## VSCode を使っているなら settings.json にコレ書いとくとヨシ
-
-"container 内仮想環境にある python modules の中身へ F12 でジャンプできない" 問題をこれで回避できる。
-
-```json
-{
-    "python.autoComplete.extraPaths": ["${workspaceFolder}/webapp/.venv/lib/python*/site-packages"]
-}
+# i18n commands.
+(cd ./frontend-react; yarn run i18next "./src/App.tsx" "./src/**/*.tsx" --config "./i18next-parser.config.js")
 ```
