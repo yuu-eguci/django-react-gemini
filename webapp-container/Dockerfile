@@ -12,10 +12,11 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libmariadb-dev gcc libc-dev default-mysql-client pkg-config \
     nginx curl && \
-    # NOTE: react-router-dom が新しい node を要求してくる。
-    #       でも slim-bookworm のベースイメージには v18 しか無い。
+    # NOTE: slim-bookworm のベースイメージには v18 しか無い。
+    #       でも react-router-dom が新しめの node を要求してくる。
     #       Node の公式リポジトリから setup_current を使うと最新版が手に入る。
-    curl -fsSL https://deb.nodesource.com/setup_current.x | bash && \
+    #       しかし最新版は新しすぎるようで、 22 を指定。
+    curl -fsSL https://deb.nodesource.com/setup_22.x | bash && \
     apt-get install -y nodejs && \
     # キャッシュクリア。
     apt-get clean && \
