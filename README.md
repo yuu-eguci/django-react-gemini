@@ -1,19 +1,11 @@
 django-react-gemini ♊
 ===
 
-🐍 ⚛️ 🐳 🇳 Python 3.10 + Django v4 + Yarn + Nuxt v2 + Nginx + Docker + GitHub Actions + Ruff + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
-
-- python + django + yarn + nuxt + nginx なんつー container を用意して、
-- 開発環境では runserver (8000 -> 8081) と yarn dev (3000 -> 3001) で開発して、
-- 実働環境では
-    - nuxt は yarn generate で静的サイトにして、 nginx (8080/ -> 8081) で配信して、
-    - django は nginx と gunicorn (8081/api/ -> 8080 -> 8000) で配信するよ!
-
-![](docs/(2023-08-05)overall-view.png)
+🐍 ⚛️ 🐳 🇳 Python 3.13 + Django v4 + Yarn + React + Nginx + Docker + GitHub Actions + Ruff + CI/CD | React も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と React を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
 
 ## コイツのいいところ
 
-- Docker 環境 + Django + Nuxt.js (frontend) + MySQL がひとつのリポジトリに詰まっててシンプルだよ。
+- Docker 環境 + Django + React (frontend) + MySQL がひとつのリポジトリに詰まっててシンプルだよ。
     - まあいいことばかりじゃないけど。
 - up で3つ一気に立ち上がるよ。
 
@@ -32,9 +24,11 @@ Django エリアのいいところ
 - GitHub Actions で ruff, test がちゃんと走るよ。
 - プロジェクト内部のモジュールをインポートするときは、つねに相対インポートを使ってる (3rd party との区別のため) よ。
 
-Nuxt.js エリアのいいところ
+React エリアのいいところ
 
-- GitHub Actions で eslint, test がちゃんと走るよ。
+- `vite-tsconfig-paths` とか `react-router-dom` とか `react-i18next` とか導入済み。
+- "さあオリジナリティ出していくぜ、" のひとつ前の段階まで揃えてある。
+    - これ以上をやると、オリジナリティを出していくときの邪魔になる。
 
 Nginx エリアのいいところ
 
@@ -53,7 +47,7 @@ Nginx エリアのいいところ
 cp ./local.env ./.env; docker compose up -d; docker compose exec webapp-service bash
 
 # Get into webapp-service
-# NOTE: It's a good practice to have separate terminals for Django and Nuxt.js for easier debugging and log tracking.
+# NOTE: It's a good practice to have separate terminals for Django and React for easier debugging and log tracking.
 docker compose exec webapp-service bash
 # Check↓
 python -V
@@ -84,9 +78,10 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 time pipenv run ruff check .
 time pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
 
-# Currently unavailable.
-# (cd ./frontend-react; time yarn test .)
-# (cd ./frontend-react; time yarn lint)
+# run 無し: watch mode
+# run 有り: いつもの
+(cd ./frontend-react; time yarn test run)
+(cd ./frontend-react; time yarn lint)
 ```
 
 ```bash

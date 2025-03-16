@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  PYTHON_VERSION: '3.10'
-  NODE_VERSION: '18.x'
+  PYTHON_VERSION: '3.13'
+  NODE_VERSION: '22.x'
 
 jobs:
   # webapp の Django 側をテストします。
@@ -42,8 +42,8 @@ jobs:
         run: pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
         working-directory: ./webapp
 
-  # webapp の Nuxt.js 側をテストを yarn でします。
-  nuxt-job:
+  # webapp の React 側をテストを yarn でします。
+  react-job:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,15 +52,17 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      # NOTE: 以降、 Node.js のルートディレクトリは ./webapp/frontend-nuxt です。
+      # NOTE: 以降、 Node.js のルートディレクトリは ./webapp/frontend-react です。
       - name: Install dependencies
         run: yarn install --dev
-        working-directory: ./webapp/frontend-nuxt
+        working-directory: ./webapp/frontend-react
 
       - name: Run ESLint linting
         run: yarn lint
-        working-directory: ./webapp/frontend-nuxt
+        working-directory: ./webapp/frontend-react
 
-      - name: Run Nuxt.js tests
-        run: yarn test
-        working-directory: ./webapp/frontend-nuxt
+      - name: Run React tests
+        # run 無し: watch mode
+        # run 有り: いつもの
+        run: yarn test run
+        working-directory: ./webapp/frontend-react

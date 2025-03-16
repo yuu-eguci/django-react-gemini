@@ -29,7 +29,7 @@ services:
       context: ./webapp-container
       dockerfile: Dockerfile
     # NOTE: 他のプロジェクトの django との重複を避けるため、変更している。
-    # NOTE: それぞれ Django と Nuxt.js のためのポート。
+    # NOTE: それぞれ Django と React のためのポート。
     ports:
       # NOTE: よく間違えるからメモ -> host 側 : container 側
       # Django の runserver 用 (8000 -> 8081)

@@ -1,4 +1,4 @@
-DEPLOY_ON_UBUNTU
+DEPLOY_ON_UBUNTU (React 時代)
 ===
 
 NOTE: いちいち UBUNTU のほうも更新するの面倒なんだよね……デプロイ環境のほうはこれ↓をベースにうまくやって。
