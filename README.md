@@ -5,9 +5,15 @@ django-react-gemini ♊
 
 ## コイツのいいところ
 
-- Docker 環境 + Django + React (frontend) + MySQL がひとつのリポジトリに詰まっててシンプルだよ。
+- Docker 環境 + Django + React (frontend) + MySQL + Nginx がひとつのリポジトリに詰まっててシンプルだよ。
     - まあいいことばかりじゃないけど。
 - up で3つ一気に立ち上がるよ。
+- 開発環境:
+    - Django runserver (8000) -> docker-compose portforward (8001) -> localhost:8001
+    - React yarn dev (5173) -> docker-compose portforward (5001) -> localhost:5001
+- Ubuntu 環境:
+    - Django Dockerfile gunicorn (8000) -> docker-compose portforward (8001) -> nginx (80) -> domain:80
+    - 
 
 Django エリアのいいところ
 
