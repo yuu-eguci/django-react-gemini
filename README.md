@@ -60,7 +60,7 @@ docker compose up -d; docker compose exec webapp-service bash
 docker compose exec webapp-service bash
 # Check↓
 python -V
-# --> Python 3.12.9
+# --> Python 3.13.2
 pipenv --version
 # --> pipenv, version 2024.4.1
 yarn -v
