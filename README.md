@@ -15,7 +15,7 @@ django-react-gemini ♊
     - Django Dockerfile gunicorn (8000) -> docker-compose portforward (8001) -> nginx (80) -> domain:80
     - 
 
-Django エリアのいいところ
+### Django エリアのいいところ
 
 - 開発環境用、本番環境用の settings が分かれてるよ。
 - 当然 Pipenv で管理できてるよ。
@@ -30,15 +30,17 @@ Django エリアのいいところ
 - GitHub Actions で ruff, test がちゃんと走るよ。
 - プロジェクト内部のモジュールをインポートするときは、つねに相対インポートを使ってる (3rd party との区別のため) よ。
 
-React エリアのいいところ
+### React エリアのいいところ
 
 - `vite-tsconfig-paths` とか `react-router-dom` とか `react-i18next` とか導入済み。
 - "さあオリジナリティ出していくぜ、" のひとつ前の段階まで揃えてある。
     - これ以上をやると、オリジナリティを出していくときの邪魔になる。
 
-Nginx エリアのいいところ
+### Nginx エリアのいいところ
 
-いいことばかりじゃないところ
+- Apache ではない (笑)
+
+### いいことばかりじゃないところ
 
 - 1アプリケーションにつき1 docker container を使うと、 VSCode 開発のときに devcontainer をキレイに使えたりして利点がある。ひとつの container に複数アプリケーションが入っていると、その利点を利用することが不可。
 
