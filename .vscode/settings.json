@@ -6,6 +6,7 @@
         "${workspaceFolder}/webapp/.venv/lib/python3.13/site-packages"
     ],
 
+    // import 整理 -> 基本はしない。
     "editor.codeActionsOnSave": {
         "source.organizeImports": "never"
     },
@@ -14,6 +15,7 @@
     // "Taken together, you can configure Ruff to format, fix, and organize imports on-save via the following settings.json"
     // の設定。
     "[python]": {
+        // 保存時に Ruff を使ってフォーマットする設定。
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.fixAll": "explicit",
@@ -32,7 +34,6 @@
     "ruff.interpreter": ["python3"],
 
     // tsx ファイル + Prettier の設定。
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true
