@@ -1,13 +1,13 @@
 """
 test: shared.tests.test_logging_formatters
 """
+
 from datetime import datetime, timedelta, timezone
 from logging import Formatter, LogRecord
 
 
 class JSTFormatter(Formatter):
-
-    JST = timezone(timedelta(hours=+9), 'JST')
+    JST = timezone(timedelta(hours=+9), "JST")
 
     def formatTime(self, record: LogRecord, datefmt: str | None = None) -> str:
         """
@@ -36,7 +36,6 @@ class JSTFormatter(Formatter):
 
 
 class UTCFormatter(Formatter):
-
     def formatTime(self, record: LogRecord, datefmt: str | None = None) -> str:
         """
         `record.created` を基に UTC での時刻を表示。
