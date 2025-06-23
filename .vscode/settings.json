@@ -29,5 +29,15 @@
     // このリポジトリの Python は Docker 内部にある。 Ruff からは使用不可。
     // というわけでローカル Python を使うように設定。
     // もしローカル Python のコマンドがこれとは違うなら、変更してね。
-    "ruff.interpreter": ["python3"]
+    "ruff.interpreter": ["python3"],
+
+    // tsx ファイル + Prettier の設定。
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    // Prettier の設定ファイルはこれ、という設定。
+    // NOTE: ……ということも出来るのだが、まあ基本は、デフォルト設定を使うのがよかろうと判断。
+    // "prettier.configPath": "./webapp/frontend-react/.prettierrc.toml",
 }

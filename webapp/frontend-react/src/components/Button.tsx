@@ -1,10 +1,10 @@
 type ButtonProps = {
-  label: string
-  onClick: () => void
-}
+  label: string;
+  onClick: () => void;
+};
 
 function Button({ label, onClick }: ButtonProps) {
-  return <button onClick={onClick}>{label}</button>
+  return <button onClick={onClick}>{label}</button>;
 }
 
-export default Button
+export default Button;
