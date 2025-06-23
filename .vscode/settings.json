@@ -6,6 +6,17 @@
         "${workspaceFolder}/webapp/.venv/lib/python3.13/site-packages"
     ],
 
+    // 以下のような考えで、 Pylance の reportMissingModuleSource を無効化。
+    // - 本リポジトリでは、 Python は Docker 内部にある
+    // - そのため、 Pylance は Docker 内部の Python のパッケージを参照不可
+    // - どうする? ホスト側と Docker 内部、両方に仮想環境を作って、 Pylance にホスト側の仮想環境を参照してもらう?
+    // - 本リポジトリでは mysqlclient とか、マシン側にライブラリが必要なものがある
+    // - それをホスト側に要求するのは、あまりに本末転倒
+    // - うん、 Pylance には黙っていてもらおう -> 無効化決定
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingModuleSource": "none"
+    },
+
     // import 整理 -> 基本はしない。
     "editor.codeActionsOnSave": {
         "source.organizeImports": "never"

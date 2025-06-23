@@ -44,7 +44,7 @@ services:
     # NOTE: 開発環境では .env を使うし、本番環境では .env を (GitHub Actions が) 上書きして使うことを想定。
     environment:
       # Pipenv 仮想環境を webapp ディレクトリ内に作るための設定。
-      - PIPENV_VENV_IN_PROJECT=1
+      - PIPENV_VENV_IN_PROJECT=${PIPENV_VENV_IN_PROJECT}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
