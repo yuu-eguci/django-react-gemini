@@ -1,7 +1,7 @@
 django-react-gemini ♊
 ===
 
-🐍 ⚛️ 🐳 🇳 Python 3.13 + Django v4 + Yarn + React + Nginx + Docker + GitHub Actions + Ruff + CI/CD | React も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と React を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
+🐍 ⚛️ 🐳 🇳 Python 3.14 + Django 6.1 + Yarn + React + Nginx + Docker + GitHub Actions + Ruff + CI/CD | React も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と React を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
 
 ## コイツのいいところ
 
@@ -60,9 +60,9 @@ docker compose up -d; docker compose exec webapp-service bash
 docker compose exec webapp-service bash
 # Check↓
 python -V
-# --> Python 3.13.2
+# --> Python 3.14.10
 pipenv --version
-# --> pipenv, version 2024.4.1
+# --> pipenv, version 2026.10.5
 yarn -v
 # --> 1.22.22
 
