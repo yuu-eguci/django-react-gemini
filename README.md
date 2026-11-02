@@ -85,12 +85,14 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 ```bash
 # Test commands.
 time pipenv run ruff check .
+time pipenv run ruff format --check .
 time pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
 
 # run 無し: watch mode
 # run 有り: いつもの
 (cd ./frontend-react; time yarn test run)
 (cd ./frontend-react; time yarn lint)
+(cd ./frontend-react; time yarn build)
 ```
 
 ```bash

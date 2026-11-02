@@ -4,7 +4,12 @@ on:
   push:
     branches: [ main ]
 
+  pull_request:
+
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 env:
   PYTHON_VERSION: '3.13'
@@ -20,9 +25,9 @@ jobs:
       PIPENV_DOTENV_LOCATION: ../local.env
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
@@ -38,6 +43,10 @@ jobs:
         run: pipenv run ruff check .
         working-directory: ./webapp
 
+      - name: Run Ruff format check
+        run: pipenv run ruff format --check .
+        working-directory: ./webapp
+
       - name: Run Django tests
         run: pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
         working-directory: ./webapp
@@ -46,15 +55,15 @@ jobs:
   react-job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       # NOTE: 以降、 Node.js のルートディレクトリは ./webapp/frontend-react です。
       - name: Install dependencies
-        run: yarn install --dev
+        run: yarn install --frozen-lockfile
         working-directory: ./webapp/frontend-react
 
       - name: Run ESLint linting
@@ -65,4 +74,8 @@ jobs:
         # run 無し: watch mode
         # run 有り: いつもの
         run: yarn test run
+        working-directory: ./webapp/frontend-react
+
+      - name: Run type check and build
+        run: yarn build
         working-directory: ./webapp/frontend-react
