@@ -67,7 +67,7 @@ yarn -v
 # --> 1.22.22
 
 (cd ./frontend-react; yarn list react)
-# --> └─ react@19.0.0
+# --> └─ react@19.3.1
 
 # Django のほう。
 # NOTE: PIPENV_VENV_IN_PROJECT は env で設定してある。
@@ -97,5 +97,5 @@ time pipenv run python manage.py test --failfast --parallel --settings=config.se
 
 ```bash
 # i18n commands.
-(cd ./frontend-react; yarn run i18next "./src/App.tsx" "./src/**/*.tsx" --config "./i18next-parser.config.js")
+(cd ./frontend-react; yarn i18next-cli extract)
 ```
