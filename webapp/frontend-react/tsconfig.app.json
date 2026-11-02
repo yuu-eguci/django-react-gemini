@@ -23,9 +23,8 @@
     "noUncheckedSideEffectImports": true,
 
     // vite-tsconfig-paths に @ -> src/ 変換してもらうための設定。
-    "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]

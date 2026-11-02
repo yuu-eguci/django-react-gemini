@@ -13,7 +13,7 @@ permissions:
 
 env:
   PYTHON_VERSION: '3.14'
-  NODE_VERSION: '22.x'
+  NODE_VERSION: '24.x'
 
 jobs:
   # webapp の Django 側をテストします。
@@ -74,6 +74,10 @@ jobs:
         # run 無し: watch mode
         # run 有り: いつもの
         run: yarn test run
+        working-directory: ./webapp/frontend-react
+
+      - name: Check i18n translation files
+        run: yarn i18next-cli extract --ci --dry-run
         working-directory: ./webapp/frontend-react
 
       - name: Run type check and build
