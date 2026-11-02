@@ -1,3 +1,5 @@
+import os
+
 from .settings import *  # noqa: F401, F403
 
 INSTALLED_APPS = [
@@ -21,4 +23,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-DEBUG = True
+DEBUG = False
+
+ALLOWED_HOSTS = [host for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",") if host]

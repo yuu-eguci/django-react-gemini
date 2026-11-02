@@ -46,12 +46,12 @@ services:
       # Pipenv 仮想環境を webapp ディレクトリ内に作るための設定。
       - PIPENV_VENV_IN_PROJECT=${PIPENV_VENV_IN_PROJECT}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
       - MYSQL_PORT=${MYSQL_PORT}
-      - APP_HOST=${APP_HOST}
     depends_on:
       - mysql-service
