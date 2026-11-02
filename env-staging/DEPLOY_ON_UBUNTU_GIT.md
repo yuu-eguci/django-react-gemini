@@ -88,7 +88,10 @@ cp /var/www/${REPO_NAME}/webapp-container/Dockerfile.staging /var/www/${REPO_NAM
 # collectstatic できていることを確認
 (cd /var/www/${REPO_NAME}/webapp/static; ls -l)
 # gunicorn で起動していることを確認
-curl http://localhost:8001/
+curl http://localhost:8001/api/app/foo
+
+# webapp-service で React をビルドする (dist を更新!)
+(cd /var/www/${REPO_NAME}; sudo docker compose exec webapp-service sh -c "cd frontend-react && yarn install --frozen-lockfile && yarn build")
 
 # Nginx を設定する
 sudo ln -sf /var/www/${REPO_NAME}/env-staging/staging-nginx.conf /etc/nginx/conf.d/default.conf
@@ -164,20 +167,20 @@ sudo systemctl restart nginx
 REPO_NAME=django-react-gemini
 
 # コンテナを削除
-(cd /var/www/${REPO_NAME}$; sudo docker compose down)
+(cd /var/www/${REPO_NAME}; sudo docker compose down)
 
 # MySQL データ削除
 sudo rm -rf /var/www/${REPO_NAME}$/data
 
 # コンテナ再構築
-(cd /var/www/${REPO_NAME}$; sudo docker compose up -d)
+(cd /var/www/${REPO_NAME}; sudo docker compose up -d)
 
 # ログを確認
-(cd /var/www/${REPO_NAME}$; sudo docker compose logs -f --tail=20 webapp-service)
-(cd /var/www/${REPO_NAME}$; sudo docker compose logs -f --tail=20 mysql-service)
+(cd /var/www/${REPO_NAME}; sudo docker compose logs -f --tail=20 webapp-service)
+(cd /var/www/${REPO_NAME}; sudo docker compose logs -f --tail=20 mysql-service)
 
 # 中に入って確認
-(cd /var/www/${REPO_NAME}$; docker compose exec webapp-service sh)
+(cd /var/www/${REPO_NAME}; docker compose exec webapp-service sh)
 ```
 
 ## ソースコードを修正したときのデプロイ
@@ -216,8 +219,7 @@ cp /var/www/${REPO_NAME}/webapp-container/Dockerfile.staging /var/www/${REPO_NAM
 (cd /var/www/${REPO_NAME}; sudo docker compose logs -f --tail=20 webapp-service)
 
 # webapp-service で React をビルドする (dist を更新!)
-(cd /var/www/${REPO_NAME}; sudo docker compose exec webapp-service sh -c "yarn install")
-(cd /var/www/${REPO_NAME}; sudo docker compose exec webapp-service sh -c "yarn build")
+(cd /var/www/${REPO_NAME}; sudo docker compose exec webapp-service sh -c "cd frontend-react && yarn install --frozen-lockfile && yarn build")
 
 # (nginx.conf.production を変更した場合) Nginx 再起動
 # 設定ファイルのテスト
