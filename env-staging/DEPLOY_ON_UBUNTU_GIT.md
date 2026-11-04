@@ -1,4 +1,4 @@
-DEPLOY_ON_UBUNTU (React 時代)
+Ubuntu へ Git でデプロイ
 ===
 
 ## 初期デプロイ
@@ -74,6 +74,7 @@ sudo chown -R $(whoami):$(whoami) /var/www/${REPO_NAME}
 # .env を用意する
 cp /var/www/${REPO_NAME}/local.env /var/www/${REPO_NAME}/.env
 # ここで .env をちゃんとしたものへ編集。 Remote-SSH のおかげでラク。
+# DJANGO_ALLOWED_HOSTS には公開ドメインと localhost (サーバ内での curl 確認用) をカンマ区切りで設定します。
 
 # Dockefile を用意する
 cp /var/www/${REPO_NAME}/webapp-container/Dockerfile.staging /var/www/${REPO_NAME}/webapp-container/Dockerfile
@@ -169,8 +170,7 @@ REPO_NAME=django-react-gemini
 # コンテナを削除
 (cd /var/www/${REPO_NAME}; sudo docker compose down)
 
-# MySQL データ削除
-sudo rm -rf /var/www/${REPO_NAME}$/data
+# MySQL データを削除する場合は、対象パスとバックアップを確認して個別に操作します
 
 # コンテナ再構築
 (cd /var/www/${REPO_NAME}; sudo docker compose up -d)
@@ -221,7 +221,7 @@ cp /var/www/${REPO_NAME}/webapp-container/Dockerfile.staging /var/www/${REPO_NAM
 # webapp-service で React をビルドする (dist を更新!)
 (cd /var/www/${REPO_NAME}; sudo docker compose exec webapp-service sh -c "cd frontend-react && yarn install --frozen-lockfile && yarn build")
 
-# (nginx.conf.production を変更した場合) Nginx 再起動
+# (staging-nginx.conf を変更した場合) Nginx 再起動
 # 設定ファイルのテスト
 sudo nginx -t
 sudo systemctl restart nginx
