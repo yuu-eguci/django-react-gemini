@@ -21,6 +21,11 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
 
   webapp-service:
     # NOTE: container name conflict を防ぐため gemini- をつけている。
@@ -54,4 +59,5 @@ services:
       - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
       - MYSQL_PORT=${MYSQL_PORT}
     depends_on:
-      - mysql-service
+      mysql-service:
+        condition: service_healthy
