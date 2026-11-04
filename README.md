@@ -3,31 +3,40 @@ django-react-gemini ♊
 
 🐍 ⚛️ 🐳 🇳 Python 3.14 + Django 6.1 + Yarn + React + Nginx + Docker + GitHub Actions + Ruff + CI/CD | React も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と React を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
 
+## ステータス
+
+- Docker: 対応!
+- Python 3.14 / Django 6.1 / Django REST framework 3.18 / MySQL 8.4
+- Node.js 24 / React 19.3 / Vite 8 / TypeScript 6.0
+- Linter: Ruff 0.17 / ESLint 10
+- Test: Django test runner / Vitest 5
+- CI: GitHub Actions (main への push と PR)
+
 ## コイツのいいところ
 
 - Docker 環境 + Django + React (frontend) + MySQL + Nginx がひとつのリポジトリに詰まっててシンプルだよ。
     - まあいいことばかりじゃないけど。
-- up で3つ一気に立ち上がるよ。
+- `docker compose up` で Django と MySQL のコンテナが立ち上がります。 React は Django と同じコンテナ内で起動します。
 - 開発環境:
     - Django runserver (8000) -> docker-compose portforward (8001) -> localhost:8001
     - React yarn dev (5173) -> docker-compose portforward (5001) -> localhost:5001
 - Ubuntu 環境:
     - Django Dockerfile gunicorn (8000) -> docker-compose portforward (8001) -> nginx (80) -> domain:80
-    - 
+    - React yarn build -> frontend-react/dist -> nginx (80) -> domain:80 で配信します。
 
 ### Django エリアのいいところ
 
 - 開発環境用、本番環境用の settings が分かれてるよ。
 - 当然 Pipenv で管理できてるよ。
 - コンソールと、 ./logs/ へのロギングができてるよ。ロギングの日時は UTC と JST を選べる。
-- ユニットテストの基礎もちゃんとあるよ。
+- View 、 middleware 、例外ハンドラ、 settings のユニットテストがあります。 DB 無しで実行できます。
 - ひさしぶりに来て、 "view どんなふうに書くんだっけ?" ってなったときのため views に view のベースを書いてるよ。
-    - 最近、 async の view も足しといたよ。ただ動かすにはこれ↓が必要かも
+    - async の view もあります。 ASGI で動かす場合は、以下の設定が必要です。
     - uvicorn (asgi サーバ) を pip install
     - gunicorn が内蔵の wsgi サーバのみならず uvicorn を動かせるように設定する
     - そうすると gunicorn が uvicorn を worker として動かして、
-    - uvicorn は asgi サーバとして django を配信してくれる!
-- GitHub Actions で ruff, test がちゃんと走るよ。
+    - uvicorn は asgi サーバとして django を配信します。
+- GitHub Actions で Ruff (lint / format) 、 Django test 、 ESLint 、 Vitest 、 i18n の抽出漏れチェック、型チェック + build を実行します。
 - プロジェクト内部のモジュールをインポートするときは、つねに相対インポートを使ってる (3rd party との区別のため) よ。
 
 ### React エリアのいいところ
@@ -47,9 +56,8 @@ django-react-gemini ♊
 ## runserver と yarn dev で起動するところまで
 
 ```bash
-# NOTE: (2025-03-04) 久しぶりに clone してみたけど、マジで
-#       Create containers -> Django のほう
-#       をサッサと打つだけで開始できた。イイぞ。
+# NOTE: Create containers -> Django のほう
+#       を実行するだけで開始できます。
 
 # Create containers
 cp ./local.env ./.env; cp ./webapp-container/Dockerfile.local ./webapp-container/Dockerfile;
