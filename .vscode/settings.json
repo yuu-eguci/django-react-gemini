@@ -36,7 +36,7 @@
     },
     // Mypy 拡張機能が pyproject.toml を読み込むようにするための設定。
     "mypy-type-checker.args": [
-        "\"mypy-type-checker.args\" = [\"--config-file=./webapp/pyproject.toml\"]"
+        "--config-file=./webapp/pyproject.toml"
     ],
 
     // このリポジトリの Python は Docker 内部にある。 Ruff からは使用不可。
